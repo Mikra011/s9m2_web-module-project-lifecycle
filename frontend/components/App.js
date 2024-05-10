@@ -1,5 +1,7 @@
 import React from 'react'
 import axios from 'axios'
+import Form from './Form'
+import TodoList from './TodoList'
 
 const URL = 'http://localhost:9000/api/todos'
 
@@ -56,6 +58,9 @@ export default class App extends React.Component {
   }
 
   // would be nice to have an endpoint to try this. I could not set it up for now :////
+  // I have tried several times, and it makes me super angry that I could not do it 🤯🤯🤯 
+  // I think I have missed some trivial stuff.
+
 
   // clearCompleted = () => {
   //   const completedTodos = this.state.todos.filter(todo => todo.completed);
@@ -74,31 +79,21 @@ export default class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='extra'>
         {/* good idea for displaying the error, shame that it was not mine :/ */}
         <div id='error' >Error: {this.state.error ? this.state.error : 'No error'}</div>
-        <div id='todos' >
-          <h2>Todos</h2>
-          {
-            this.state.todos
-            .filter(td => this.state.showCompleted || !td.completed) 
-            .map(td => (
-              <div key={td.id} onClick={this.toggleCompleted(td.id)}>
-                {td.name} {td.completed ? '✔️' : ''}
-              </div>
-            ))
-          }
-        </div>
-        <form id='todoForm' onSubmit={this.onFormSubmit} >
-          <input
-            type='text'
-            placeholder='type a todo'
-            value={this.state.nameInput}
-            onChange={this.onNameInputChange}
-          ></input>
-          <input type='submit'></input>
-        </form>
-        <button onClick={this.toggleShowCompleted} >{this.state.showCompleted ? 'Hide' : 'Show'} Completed</button>
+        <TodoList
+          todos={this.state.todos} 
+          toggleCompleted={this.toggleCompleted} 
+          showCompleted={this.state.showCompleted}
+        />
+        <Form
+          onFormSubmit={this.onFormSubmit}
+          nameInput={this.state.nameInput}
+          onNameInputChange={this.onNameInputChange}
+          toggleShowCompleted={this.toggleShowCompleted}
+          showCompleted={this.state.showCompleted}
+        />
       </div>
     )
   }

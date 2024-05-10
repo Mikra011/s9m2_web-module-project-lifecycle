@@ -83,3 +83,24 @@ ul, form {
 .todo:hover {
   cursor: pointer;
 }
+
+/* could be better make separate comps, 
+but for now I just add few things here */
+
+div:not(.exception),
+div.extra {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  border: 2px solid gray;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  line-height: 30px;
+}
+
+
+div.extra {
+  border: none; 
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}

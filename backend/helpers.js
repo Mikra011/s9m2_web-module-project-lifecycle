@@ -84,10 +84,32 @@ const toggleDone = async id => {
   return [status, { message, data }]
 }
 
+// const deleteTodo = async id => {
+//   let message, status
+//   try {
+//     const index = todos.findIndex(todo => todo.id === id)
+//     if (index !== -1) {
+//       todos.splice(index, 1)
+//       status = 200
+//       message = `Todo ${id} deleted successfully`
+//     } else {
+//       status = 404
+//       message = `Ouch: Todo ${id} not found`
+//     }
+//   } catch (err) {
+//     message = `Ouch: ${err.message}`
+//     status = 422
+//   }
+//   return [status, { message }]
+// }
+
 module.exports = {
   getAll,
   getById,
   create,
   toggleDone,
+  // deleteTodo,
   resetTodos, // only tests use this
 }
+
+// I leave here my code to make myself laugh later when I understand it

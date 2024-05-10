@@ -7,7 +7,8 @@ export default class App extends React.Component {
   state = {
     todos: [],
     error: '',
-    nameInput: ''
+    nameInput: '',
+    showCompleted: true
   }
 
   displayAxiosError = (err) => {
@@ -16,14 +17,14 @@ export default class App extends React.Component {
 
   onNameInputChange = (e) => {
     const { value } = e.target
-    this.setState({ ...this.state, nameInput: value})
+    this.setState({ ...this.state, nameInput: value })
   }
 
   postTodos = () => {
-    axios.post(URL, {name: this.state.nameInput})
+    axios.post(URL, { name: this.state.nameInput })
       .then(
         this.fetchTodos(),
-        this.setState({ ...this.state, nameInput: ''})
+        this.setState({ ...this.state, nameInput: '' })
       )
       .catch(this.displayAxiosError)
   }
@@ -32,7 +33,7 @@ export default class App extends React.Component {
     axios.get(URL)
       .then(res => {
         this.setState({ ...this.state, todos: res.data.data })
-        this.setState({ ...this.state, nameInput: ''})
+        this.setState({ ...this.state, nameInput: '' })
       })
       .catch(this.displayAxiosError)
   }
@@ -54,6 +55,23 @@ export default class App extends React.Component {
       .catch(this.displayAxiosError)
   }
 
+  // would be nice to have an endpoint to try this. I could not set it up for now :////
+
+  // clearCompleted = () => {
+  //   const completedTodos = this.state.todos.filter(todo => todo.completed);
+  //   completedTodos.forEach(todo => {
+  //     axios.delete(`${URL}/${todo.id}`)
+  //       .then(() => {
+  //         this.fetchTodos();
+  //       })
+  //       .catch(this.displayAxiosError);
+  //   });
+  // }
+
+  toggleShowCompleted = () => {
+    this.setState({ ...this.state, showCompleted: !this.state.showCompleted })
+  }
+
   render() {
     return (
       <div>
@@ -62,9 +80,13 @@ export default class App extends React.Component {
         <div id='todos' >
           <h2>Todos</h2>
           {
-            this.state.todos.map(td => {
-              return <div key={td.id} onClick={this.toggleCompleted(td.id)} >{td.name} {td.completed ? '✔️' : ''}</div>
-            })
+            this.state.todos
+            .filter(td => this.state.showCompleted || !td.completed) 
+            .map(td => (
+              <div key={td.id} onClick={this.toggleCompleted(td.id)}>
+                {td.name} {td.completed ? '✔️' : ''}
+              </div>
+            ))
           }
         </div>
         <form id='todoForm' onSubmit={this.onFormSubmit} >
@@ -76,7 +98,7 @@ export default class App extends React.Component {
           ></input>
           <input type='submit'></input>
         </form>
-        <button>Clear Completed</button>
+        <button onClick={this.toggleShowCompleted} >{this.state.showCompleted ? 'Hide' : 'Show'} Completed</button>
       </div>
     )
   }

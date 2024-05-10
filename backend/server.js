@@ -47,4 +47,13 @@ server.use((req, res) => {
   })
 })
 
+// server.delete('/api/todos/:id', async (req, res) => {
+//   const id = req.params.id
+//   const [status, response] = await Todo.deleteTodo(id) 
+//   res.status(status).json(response)
+// })
+
+
 module.exports = server
+
+// I leave here my code to make myself laugh later when I understand it

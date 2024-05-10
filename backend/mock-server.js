@@ -34,6 +34,14 @@ async function toggleDone(req, res, ctx) {
   )
 }
 
+// async function deleteById(req, res, ctx) {
+//   const [status, payload] = await Todo.deleteTodo(req.params.id) 
+//   return res(
+//     ctx.status(status),
+//     ctx.json(payload),
+//   )
+// }
+
 function catchAll(req, res, ctx) {
   const message = `Endpoint [${req.method}] /${req.params['0']} does not exist`
   return res(
@@ -47,7 +55,10 @@ const handlers = [
   rest.get('http://localhost:9000/api/todos/:id', getById),
   rest.post('http://localhost:9000/api/todos', create),
   rest.patch('http://localhost:9000/api/todos/:id', toggleDone),
+  // rest.delete('http://localhost:9000/api/todos/:id', deleteById),
   rest.all('http://localhost:9000/*', catchAll),
 ]
 
 module.exports = setupServer(...handlers)
+
+// I leave here my code to make myself laugh later when I understand it

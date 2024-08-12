@@ -31,6 +31,12 @@ server.patch('/api/todos/:id', async (req, res) => {
   res.status(status).json(response)
 })
 
+server.delete('/api/todos/:id', async (req, res) => {
+  const id = req.params.id
+  const [status, response] = await Todo.deleteTodo(id) 
+  res.status(status).json(response)
+})
+
 server.use('/api/*', (req, res) => {
   res.status(404).json({
     message: `Endpoint [${req.method}] ${req.originalUrl} does not exist`,
@@ -46,13 +52,6 @@ server.use((req, res) => {
     message: `Endpoint [${req.method}] ${req.originalUrl} does not exist`,
   })
 })
-
-// server.delete('/api/todos/:id', async (req, res) => {
-//   const id = req.params.id
-//   const [status, response] = await Todo.deleteTodo(id) 
-//   res.status(status).json(response)
-// })
-
 
 module.exports = server
 

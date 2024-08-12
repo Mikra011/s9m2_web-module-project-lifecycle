@@ -62,16 +62,16 @@ export default class App extends React.Component {
   // I think I have missed some trivial stuff.
 
 
-  // clearCompleted = () => {
-  //   const completedTodos = this.state.todos.filter(todo => todo.completed);
-  //   completedTodos.forEach(todo => {
-  //     axios.delete(`${URL}/${todo.id}`)
-  //       .then(() => {
-  //         this.fetchTodos();
-  //       })
-  //       .catch(this.displayAxiosError);
-  //   });
-  // }
+  clearCompleted = () => {
+    const completedTodos = this.state.todos.filter(todo => todo.completed);
+    completedTodos.forEach(todo => {
+      axios.delete(`${URL}/${todo.id}`)
+        .then(() => {
+          this.fetchTodos()
+        })
+        .catch(this.displayAxiosError)
+    })
+  }
 
   toggleShowCompleted = () => {
     this.setState({ ...this.state, showCompleted: !this.state.showCompleted })
@@ -93,6 +93,7 @@ export default class App extends React.Component {
           onNameInputChange={this.onNameInputChange}
           toggleShowCompleted={this.toggleShowCompleted}
           showCompleted={this.state.showCompleted}
+          clearCompleted={this.clearCompleted}
         />
       </div>
     )
